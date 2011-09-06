@@ -1,18 +1,11 @@
-#!/usr/local/bin/ruby -rubygems
+require 'rubygems'
+require 'bundler/setup'
 
+Bundler.require(:default)
 
-require 'sinatra'
-require 'toopaste.config'
-require 'dm-core'
-require 'dm-validations'
-require 'dm-timestamps'
-require 'dm-migrations'
-require 'dm-types'
-require 'haml'
-require 'sass'
-require 'uv'
-require 'rack-flash'
+require './toopaste.config.rb'
 require 'facets/time'
+require 'uv'
 require 'drb' if settings.announce_irc[:active]
 
 configure do
@@ -181,10 +174,12 @@ get %r{/(raw|download)?/?([a-z0-9]+)} do # '/:random_id' do
 
   @snippet = Snippet.get(random_id)
   if @snippet
-    delete_at = Time.parse(@snippet.delete_at.to_s)
-    if delete_at.past? and not @snippet.delete_at.nil?
-      @snippet.destroy
-      raise not_found
+    if @snippet.delete_at and not nil?
+      delete_at = Time.parse(@snippet.delete_at.to_s)
+      if delete_at.past?
+        @snippet.destroy
+        raise not_found
+      end
     end
 
     if raw or download

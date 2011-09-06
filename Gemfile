@@ -1,15 +1,15 @@
 source :rubygems
 
 gem 'sinatra'
+gem 'shotgun'
 gem 'dm-core'
 gem 'dm-validations'
 gem 'dm-timestamps'
 gem 'dm-migrations'
-#gem 'dm-postgres-adapter'
 gem 'dm-sqlite-adapter'
 gem 'dm-types'
 gem 'haml'
 gem 'sass'
-gem 'ultraviolet'
+gem 'ultraviolet', :git => 'git://github.com/spox/ultraviolet.git'
 gem 'rack-flash'
 gem 'facets'
