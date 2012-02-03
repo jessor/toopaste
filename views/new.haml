@@ -29,7 +29,8 @@
         %select{ :name => 'snippet_language', :id => 'snippet_language' }
           / first the list of prefered languages
           - @preferred_languages.each do |preferred|
-            %option{ :value => preferred} #{LANGUAGES[preferred]}
+            - if LANGUAGES[preferred]
+              %option{ :value => preferred} #{LANGUAGES[preferred]}
           %option ---------------------------------------------------
           - LANGUAGES.keys.sort.each do |language|
             - if not @preferred_languages.include? language

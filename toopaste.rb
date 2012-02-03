@@ -39,9 +39,22 @@ module Uv
   def Uv.get_syntaxes
     @syntaxes
   end
+
+  def Uv.init_syntaxes
+    @syntaxes = {}
+    Dir.glob( File.join(@syntax_path, '*.syntax') ).each do |f| 
+      begin
+        syntax = Textpow::SyntaxNode.load( f )
+        @syntaxes[File.basename(f, '.syntax')] = syntax if syntax
+      rescue Exception => e
+        puts e.message
+        puts "ERROR unable to load: #{f}"
+      end
+    end
+  end
 end
 languages = {}
-Uv.init_syntaxes unless Uv.get_syntaxes
+Uv.init_syntaxes
 Uv.get_syntaxes.each do |syntax|
   languages[syntax.first] = syntax[1].name
 end
