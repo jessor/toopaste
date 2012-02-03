@@ -209,14 +209,6 @@ get %r{/(raw|download)?/?([a-z0-9]+)} do # '/:random_id' do
   end
 end
 
-# switch active theme
-post '/switch_theme' do
-  if THEMES.include? params[:theme]
-    session[:active_theme] = params[:theme]
-  end
-  redirect to("/#{params[:snippet_random_id]}")
-end
-
 # delete snippet
 delete '/:random_id' do
   protected!

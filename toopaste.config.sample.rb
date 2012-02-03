@@ -1,6 +1,6 @@
 configure do
   set :adminpass, 'changeme'
-  set :default_theme, 'zenburnesque'
+  set :default_theme, 'plastic'
   set :pagetitle, 'paste.geekosphere.org'
   set :snippets_in_sidebar_count, 25
   set :preferred_languages, [

@@ -1,28 +1,25 @@
-#content{ :class => 'twelvecol, last' }
-  .snippet
-    %h2
-      & Snippet: #{@snippet.title}
-    #meta
-      %a{ :href=> "/raw/#{@snippet.random_id}/#{@snippet.filename}" } raw
-      &middot;
-      %a{ :href=> "/download/#{@snippet.random_id}/#{@snippet.filename}" } download
-      &middot;
-      %a{ :href=> '#', :id => 'toggle-lines' } toggle line numbers
-    #content{ :class => 'sbody' }
-      = preserve @content
-    #info
-      #{LANGUAGES[@snippet.language]}
-      posted on #{@snippet.created_at.strftime("%Y-%m-%d at %H:%M:%S (%Z)")}
-      - if @snippet.author and not @snippet.author.empty?
-        & by #{@snippet.author}
+%h2
+  & Snippet: #{@snippet.title}
 
-      %form{ :action => '/switch_theme', :method => 'POST', :id => 'switch-theme' }
-        %input{ :type => 'hidden', :name => 'snippet_random_id', :value => @snippet.random_id}
-        %select{ :name => 'theme' }
-          - THEMES.each do |theme|
-            - if @active_theme == theme
-              %option{:selected => 'selected'} #{theme}
-            - else
-              %option #{theme}
-        %input{ :type => 'submit', :value => 'switch theme'}
+%strong
+  Written in
+= LANGUAGES[@snippet.language]
 
+and
+
+%strong
+  posted on
+= @snippet.created_at.strftime("%b %d, %Y <strong>at</strong> %H:%M ")
+
+- if @snippet.author and not @snippet.author.empty?
+  %strong
+    by
+  = @snippet.author
+
+.right
+  %a{ :href=> "/raw/#{@snippet.random_id}/#{@snippet.filename}", :class => 'btn' } raw
+  %a{ :href=> "/download/#{@snippet.random_id}/#{@snippet.filename}", :class => 'btn' } download
+  %a{ :href=> '#', :id => 'toggle-lines', :class => 'btn' } toggle line numbers
+
+#content{ :class => 'sbody' }
+  = preserve @content

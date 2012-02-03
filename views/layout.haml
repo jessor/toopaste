@@ -4,13 +4,11 @@
     %title
       &= @title || settings.pagetitle
     %meta{ :name => 'viewport', :content => 'width=device-width, initial-scale=1.0' }
-    /[if lte IE 9]
-      %link{ :rel => 'stylesheet', :href => '/_ie.css', :media => 'screen' }
-    %script{ :src => '/css3-mediaqueries.js' }
     %link{ :rel => 'stylesheet', :href => '/stylesheet.css' }
     - if @active_theme
       %link{ :rel => 'stylesheet', :href => "/ultraviolet/css/#{@active_theme}.css" }
-    %script{ :src => '/jquery.min.js' }
+    %script{ :src => '/javascripts/jquery.min.js' }
+    %script{ :src => '/javascripts/bootstrap-dropdown.js' }
     :javascript
       jQuery(function(){
         $('#toggle-lines').click(function(event) {
@@ -21,16 +19,41 @@
           $('#switch-theme').submit();
         });
         $('#switch-theme input[type="submit"]').hide();
+        $('.dropdown-toggle').dropdown();
       });
   %body
-    #wrapper{ :class => 'container' }
-      .row
-        - if flash[:error]
-          #error{ :class => 'twelvecol, last' }
-            = flash[:error]
-        %header{ :class => 'twelvecol, last' }
-          %h1
-            %a{ :href => '/' } #{settings.pagetitle}
-        = yield
-  %a{ :href => 'https://github.com/jessor/toopaste', :id => 'github' }
-    %img{ :src => '/fork_me_on_github.png' }
+    %div{ :class => 'navbar navbar-fixed-top' }
+      .navbar-inner
+        .container-fluid
+          %a{ :class => 'brand', :href => '/' } #{settings.pagetitle}
+          %ul.nav
+            %li
+              %a{ :href => '/' } Home
+            - if @snippets
+              %li.dropdown
+                %a{ :href => '#', :class => 'dropdown-toggle', :data => { :toggle => 'dropdown' } }
+                  Recent Snippets
+                  %b.caret
+                %ul.dropdown-menu
+                  - @snippets.each do |snippet|
+                    %li
+                      %a{ :href => snippet.random_id, :title => snippet.title }
+                        & #{snippet.title}
+                        - if LANGUAGES.has_key? snippet.language
+                          & (#{LANGUAGES[snippet.language]}) 
+          %ul{ :class => 'nav pull-right' }
+            %li.dropdown
+              %a{ :href => '#', :class => 'dropdown-toggle', :data => { :toggle => 'dropdown' } }
+                About
+                %b.caret
+              %ul.dropdown-menu
+                %li
+                  %a{ :href => 'https://github.com/jessor/toopaste' } GitHub Repository
+
+    %div.container-fluid
+      .row-fluid
+        .span12
+          - if flash[:error]
+            %div{ :class => 'alert alert-error' }
+              = flash[:error]
+          = yield

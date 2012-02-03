@@ -1,30 +1,31 @@
-#sidebar{ :class => 'threecol' }
-  %h2 Recent Snippets
-  - if @snippets
-    %ul
-      - @snippets.each do |snippet|
-        %li
-          %a{ :href => snippet.random_id, :title => snippet.title }
-            & #{snippet.title}
-            - if LANGUAGES.has_key? snippet.language
-              & (#{LANGUAGES[snippet.language]})
-#content{ :class => 'ninecol, last' }
-  .snippet
-    %h2 Paste a new code snippet
-    %form{ :action => '/', :method => 'POST' }
-      .left
-        %label{ :for => 'snippet_title' } Title:
+%form{ :action => '/', :method => 'POST', :class => 'form-horizontal' }
+
+  %fieldset
+    %legend
+      Paste a new code snippet
+
+    .control-group
+      %label{ :for => 'snippet_title' } Title:
+      .controls
         %input{ :type => 'text', :name => 'snippet_title', :id => 'snippet_title' }
-        %label{ :for => 'snippet_author' } Author:
+
+    .control-group
+      %label{ :for => 'snippet_author' } Author:
+      .controls
         %input{ :type => 'text', :name => 'snippet_author', :value => @author, :id => 'snippet_author' }
-      .right
-        %label{ :for => 'snippet_delete_at' } Delete in
+
+    .control-group
+      %label{ :for => 'snippet_delete_at' } Delete in
+      .controls
         %input{ :type => 'text', :name => 'snippet_delete_at', :id => 'snippet_delete_at' }
         %select{ :name => 'snippet_delete_at_unit', :id => 'snippet_delete_at_unit' }
           %option{ :value => 'minutes'} Minutes
           %option{ :value => 'hours'} Hours
           %option{ :value => 'days'} Days
-        %label{ :for => 'snippet_language' } Language:
+
+    .control-group
+      %label{ :for => 'snippet_language' } Language:
+      .controls
         %select{ :name => 'snippet_language', :id => 'snippet_language' }
           / first the list of prefered languages
           - @preferred_languages.each do |preferred|
@@ -33,14 +34,21 @@
           - LANGUAGES.keys.sort.each do |language|
             - if not @preferred_languages.include? language
               %option{ :value => language } #{LANGUAGES[language]}
-      %br
+
+    .control-group
       %label{ :for => 'snippet_body' } Content:
-      %textarea{ :name => 'snippet_body', :id => 'snippet_body', :rows => 20 }
-      %br
-      %input{ :type => 'checkbox', :name => 'snippet_visibility', :value => 'private' }
-      Don't list
-      - if settings.announce_irc[:active]
-        %input{ :type => 'checkbox', :name => 'announce_irc', :value => '1' }
-        & Announce in #{settings.announce_irc[:channel]}
-        %br
-      %input{ :type => 'submit', :value => 'Save', :id => 'new' }
+      .controls
+        %textarea{ :name => 'snippet_body', :id => 'snippet_body', :rows => 20, :class => 'span10' }
+
+    .control-group
+      %label{ :for => 'snippet_visibilityoptions' } Visibility
+      .controls
+        %label.checkbox
+          %input{ :type => 'checkbox', :name => 'snippet_visibility', :value => 'private' } Don't publicly list this
+        - if settings.announce_irc[:active]
+          %label.checkbox
+            %input{ :type => 'checkbox', :name => 'announce_irc', :value => '1' }
+            & Announce in #{settings.announce_irc[:channel]}
+
+    .form-actions        
+      %input{ :type => 'submit', :value => 'Save', :id => 'new', :class => 'btn btn-primary' }

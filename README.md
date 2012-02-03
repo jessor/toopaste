@@ -23,7 +23,10 @@ Install:
 
 * git clone
 * cd toopaste
-* examine and trust .rvmrc (if you're not using [rvm](http://rvm.beginrescueend.com) yet: you should)
+* git submodule update --init
+* cd vendor/bootstrap-sass
+* git checkout 2.0
+* examine and trust .rvmrc (if you're not using rvm: [get it](http://rvm.beginrescueend.com))
 * gem install bundler
 * bundle install
 * cp toopaste.config.sample.rb toopaste.config.rb and edit it to your liking
