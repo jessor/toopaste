@@ -1,19 +1,18 @@
 configure do
   set :adminpass, 'changeme'
-  set :default_theme, 'plastic'
+  set :default_theme, 'iplastic'
   set :pagetitle, 'paste.geekosphere.org'
   set :snippets_in_sidebar_count, 25
   set :preferred_languages, [
-    'plain_text',
-    'ruby',
-    'python',
-    'tcl',
-    'javascript',
-    'html',
-    'c',
-    'c++',
-    'java',
-    'php'
+    'text.plain',
+    'source.ruby',
+    'source.python',
+    'source.tcl',
+    'source.js',
+    'text.html.basic',
+    'source.c',
+    'source.c++',
+    'source.java'
   ]
 
   # you shouldn't use your owner account here, create a

@@ -6,10 +6,10 @@ Bundler.require(:default)
 require './toopaste.config.rb'
 require 'facets/time'
 require 'uv'
+require 'sinatra/flash'
 require 'drb' if settings.announce_irc[:active]
 
 configure do
-  use Rack::Flash
   enable :sessions
 end
 
@@ -98,7 +98,7 @@ class Snippet
     if LANGUAGES.keys.include? @language
       return @language
     else
-      return 'plain_text'
+      return 'text.plain'
     end
   end
 
@@ -173,8 +173,9 @@ post '/' do
 
     redirect "/#{@snippet.random_id}"
   else
-    flash[:error] = "<strong>Uh-oh, something went wrong:</strong><br />"
-    @snippet.errors.each { |e| flash[:error] += e.to_s + ".<br />" }
+    flashmsg = ""
+    @snippet.errors.each { |e| flashmsg += e.to_s << ".<br />" }
+    flash[:error] = "<strong>Uh-oh, something went wrong:</strong><br />#{flashmsg}"
     redirect '/'
   end
 end
