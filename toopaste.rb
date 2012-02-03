@@ -11,6 +11,10 @@ require 'drb' if settings.announce_irc[:active]
 
 configure do
   enable :sessions
+  use Rack::PageSpeed, :public => 'public' do
+    store :disk => 'public'
+    combine_javascripts
+  end
 end
 
 helpers do

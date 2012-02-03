@@ -1,4 +1,14 @@
 GIT
+  remote: git://github.com/c00lryguy/rack-pagespeed.git
+  revision: 376677bb0de9aa428919a45aca56d8390f64c4c7
+  ref: 376677bb0de9aa428919
+  specs:
+    rack-pagespeed (1.0.8)
+      dalli
+      jsmin
+      nokogiri
+
+GIT
   remote: git://github.com/grosser/ultraviolet.git
   revision: f2711cced7d3ccbcbc40c013c0a917929c8cd065
   specs:
@@ -10,6 +20,7 @@ GEM
   specs:
     addressable (2.2.6)
     bcrypt-ruby (3.0.1)
+    dalli (1.1.4)
     data_objects (0.10.7)
       addressable (~> 2.1)
     dm-core (1.2.0)
@@ -39,8 +50,10 @@ GEM
     facets (2.9.3)
     fastercsv (1.5.4)
     haml (3.1.4)
+    jsmin (1.0.1)
     json (1.6.5)
     multi_json (1.0.4)
+    nokogiri (1.5.0)
     plist (3.1.0)
     rack (1.4.1)
     rack-protection (1.2.0)
@@ -72,6 +85,7 @@ DEPENDENCIES
   dm-validations
   facets
   haml
+  rack-pagespeed!
   sass
   shotgun
   sinatra
