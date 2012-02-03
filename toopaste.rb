@@ -190,6 +190,8 @@ get %r{/(raw|download)?/?([a-z0-9]+)} do # '/:random_id' do
   download = true if params[:captures][0] and params[:captures][0] == 'download'
   random_id = params[:captures][1]
 
+  @snippets = Snippet.all(:visibility => 'public', :order => [:created_at.desc], :limit => settings.snippets_in_sidebar_count)
+
   @snippet = Snippet.get(random_id)
   if @snippet
     if @snippet.delete_at and not nil?
