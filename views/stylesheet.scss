@@ -8,3 +8,7 @@ body {
     text-align: right;
     padding-bottom: 10px;
 }
+
+.dropdown.open .dropdown-menu {
+    overflow: hidden;
+}
